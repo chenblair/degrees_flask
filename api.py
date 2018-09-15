@@ -20,7 +20,7 @@ def sign_up():
         # username = request.form['user']
         # password = request.form['pass']
         # email = request.form['email']
-        return auth.add_user(**response.json)
+        return auth.add_user(**request.json)
     except:
         return jsonify(success=False, reason='Could not sign up due to a Server Error'), 500
 
