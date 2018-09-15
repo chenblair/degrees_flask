@@ -10,22 +10,22 @@ def create_profile(user):
     if user.get('') is not None and user.get('') is not None: # TODO: fix this schema
         db.users.insert_one(user)
 
-def update_profile(user, password=None, email=None, color=None, pathHistory=None, intersections=None):
-    user = db.users.find_one({"username": user})
+def update_profile(username, password=None, email=None, color=None, pathHistory=None, intersections=None):
+    user = db.users.find_one({"username": username})
     print(user)
     if user is None:
         return jsonify(success=False, reason="User does not exist")
 
     if password is not None:
-        db.users.update_one({"username": user}, {"$set": {"password": password}})
+        db.users.update_one({"username": username}, {"$set": {"password": password}})
     if email is not None:
-        db.users.update_one({"username": user}, {"$set": {"email": email}})
+        db.users.update_one({"username": username}, {"$set": {"email": email}})
     if color is not None:
-        db.users.update_one({"username": user}, {"$set": {"color": color}})
+        db.users.update_one({"username": username}, {"$set": {"color": color}})
     if pathHistory is not None:
-        db.users.update_one({"username": user}, {"$set": {"pathHistory": pathHistory}})
+        db.users.update_one({"username": username}, {"$set": {"pathHistory": pathHistory}})
     if intersections is not None:
-        db.users.update_one({"username": user}, {"$set": {"intersections": intersections}})
+        db.users.update_one({"username": username}, {"$set": {"intersections": intersections}})
 
     return jsonify(success=True)
 

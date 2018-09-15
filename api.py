@@ -17,9 +17,6 @@ def cakes():
 @app.route('/signup', methods=['POST'])
 def sign_up():
     try:
-        # username = request.form['user']
-        # password = request.form['pass']
-        # email = request.form['email']
         return auth.add_user(**request.json)
     except:
         return jsonify(success=False, reason='Could not sign up due to a Server Error'), 500
@@ -27,8 +24,8 @@ def sign_up():
 @app.route('/signin', methods=['GET'])
 def sign_in():
     try:
-        username = request.args.get('user')
-        password = request.args.get('pass')
+        username = request.args.get('username')
+        password = request.args.get('password')
         return auth.log_in(username, password)
     except:
         return jsonify(success=False, reason='Could not sign in due to a Server Error'), 500
@@ -44,7 +41,7 @@ def update_profile():
 @app.route('/get_profile', methods=['GET'])
 def get_profile():
     try:
-        username = request.args.get('user')
+        username = request.args.get('username')
         return profile.get_profile(username)
     except:
         return jsonify(success=False, reason='Could not get profile due to a Server Error'), 500
