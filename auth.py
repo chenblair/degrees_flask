@@ -1,17 +1,9 @@
 import sqlite3
 import datetime
 from flask import *
+from api import db
 
-db = 'users.db'
-
-def initialize_db():
-    with sqlite3.connect(db) as conn: # connect to that database (will create if it doesn't already exist)
-        c = conn.cursor()  # make cursor into database (allows us to execute commands)
-        try:
-            c.execute(
-                '''CREATE TABLE users (user text, email text, pass text, timing timestamp);''')  # run a CREATE TABLE command
-        except:
-            pass
+# db = 'users.db'
 
 def add_user(username, password, email):
     if username_exists(username):
@@ -19,32 +11,18 @@ def add_user(username, password, email):
     if email_exists(email):
         return jsonify(success=False, reason='Email already exists')
 
-    with sqlite3.connect(db) as conn: # connect to that database (will create if it doesn't already exist)
-        c = conn.cursor()  # make cursor into database (allows us to execute commands)
-        c.execute('''INSERT into users VALUES (?,?,?,?);''', (username, email, password, datetime.datetime.now()))
+    db.users.insert_one({"username": username, "password": password, "email": email, "color": "#000000", "pathHistory": [], "intersections": []})
 
     return jsonify(success=True, username=username)
 
 def username_exists(username):
-    conn = sqlite3.connect(db)  # connect to that database (will create if it doesn't already exist)
-    c = conn.cursor()  # make cursor into database (allows us to execute commands)
-    rows = c.execute(
-        '''SELECT * FROM users WHERE user = ? LIMIT 1;''',
-        (username,)).fetchall()
-    return len(rows) > 0
+    print(db.users)
+    print(db.users.find_one({"username": username}))
+    return db.users.find_one({"username": username}) is not None
 
 def email_exists(email):
-    conn = sqlite3.connect(db)  # connect to that database (will create if it doesn't already exist)
-    c = conn.cursor()  # make cursor into database (allows us to execute commands)
-    rows = c.execute(
-        '''SELECT * FROM users WHERE email = ? LIMIT 1;''',
-        (email,)).fetchall()
-    return len(rows) > 0
+    return db.users.find_one({"email": email}) is not None
 
 def log_in(username, password):
-    conn = sqlite3.connect(db)  # connect to that database (will create if it doesn't already exist)
-    c = conn.cursor()  # make cursor into database (allows us to execute commands)
-    rows = c.execute(
-        '''SELECT * FROM users WHERE user = ? AND pass = ? LIMIT 1;''',
-        (username, password)).fetchall()
-    return jsonify(success=True) if len(rows) > 0 else jsonify(success=False, reason='Invalid username/password')
+    user = db.users.find_one({"username": username, "password": password})
+    return jsonify(success=False, reason='Invalid username/password') if user is None else jsonify(success=True)
