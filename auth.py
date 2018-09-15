@@ -1,4 +1,3 @@
-import sqlite3
 import datetime
 from flask import *
 from api import db

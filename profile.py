@@ -1,4 +1,3 @@
-import sqlite3
 from flask import *
 from api import db
 from bson.json_util import dumps

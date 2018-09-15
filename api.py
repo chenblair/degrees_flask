@@ -1,6 +1,5 @@
 from flask import *
 from flask_pymongo import PyMongo
-import sqlite3
 
 app = Flask(__name__)
 app.config["MONGO_URI"] = "mongodb://admin:wordpass1337@ds028310.mlab.com:28310/degrees"
@@ -9,6 +8,7 @@ db = mongo.db
 
 import auth
 import profile
+import location
 
 @app.route('/')
 def cakes():
@@ -17,10 +17,10 @@ def cakes():
 @app.route('/signup', methods=['POST'])
 def sign_up():
     try:
-        username = request.form['user']
-        password = request.form['pass']
-        email = request.form['email']
-        return auth.add_user(username, password, email)
+        # username = request.form['user']
+        # password = request.form['pass']
+        # email = request.form['email']
+        return auth.add_user(**response.json)
     except:
         return jsonify(success=False, reason='Could not sign up due to a Server Error'), 500
 
@@ -33,6 +33,7 @@ def sign_in():
     except:
         return jsonify(success=False, reason='Could not sign in due to a Server Error'), 500
 
+# NOT WORKING
 @app.route('/update_profile', methods=['POST'])
 def update_profile():
     try:
@@ -47,6 +48,13 @@ def get_profile():
         return profile.get_profile(username)
     except:
         return jsonify(success=False, reason='Could not get profile due to a Server Error'), 500
+
+@app.route('/add_new_location', methods=['POST'])
+def add_new_location():
+    try:
+        return location.add_new_location(**request.json)
+    except:
+        return jsonify(success=False, reason='Could not add location due to a Server Error'), 500
 
 if __name__ == '__main__':
     # initialize_dbs()
