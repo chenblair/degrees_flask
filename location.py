@@ -104,7 +104,7 @@ def traverse_fake(username):
     
     for stuff in intersections:
         for blah in stuff:
-            pts[0].append(blah["coords"])
+            pts[0].append([blah["coords"][0], blah["coords"][1], user["color"]])
     
     return json.dumps(pts)
     
