@@ -33,3 +33,11 @@ def add_intersection(username, otherUser, lat, lng):
     db.users.update_one({"username": otherUser}, {"$push": {"intersections": {"otherUser": username, "coords": [lat, lng]}}})
 
     return jsonify(success=True)
+
+
+def traverse(username):
+    user = db.users.find_one({"username": username})
+    if user is None:
+        return jsonify(success=False, reason="User does not exist")
+
+    print (user)
