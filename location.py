@@ -95,16 +95,21 @@ def traverse_fake(username):
         return jsonify(success=False, reason="User does not exist")
 
     intersections = []
+    colors = []
     pts = [[]]
 
     users = db.users.find()
     for thing in users:
         if len(thing["intersections"]) != 0:
             intersections.append(thing["intersections"])
+            colors.append(user["color"])
     
+
     for stuff in intersections:
-        for blah in stuff:
-            pts[0].append([blah["coords"][0], blah["coords"][1], user["color"]])
+        while len(stuff) > 1:
+            pts[0].append([stuff[0]["coords"], stuff[1]["coords"], colors[0]])
+            del stuff[0]
+        del colors[0]
     
     return json.dumps(pts)
     
