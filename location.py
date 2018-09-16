@@ -53,13 +53,13 @@ def traverse(username):
         for user in users:
             user2 = db.users.find_one({"username": user["intersections"][0]["otherUser"]})
             while user2["intersections"][0]["otherUser"] != user["username"]:
-                user2["intersections"].drop(0)
+                del user2["intersections"][0]
             moreUsers.append(user2["intersections"])
         users = users + moreUsers
         level = []
         for user in users:
             level.append([user["intersections"][0]["coords"], user["intersections"][1]["coords"], user["color"]])
-            user["intersections"].drop(0)
+            del user["intersections"][0]
         tree.append(level)
     return json.dumps(tree)
 
