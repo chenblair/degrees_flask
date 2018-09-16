@@ -1,6 +1,7 @@
 from flask import *
 from api import db
 import time
+from profile import DEFAULT_IMAGE
 
 # db = 'users.db'
 
@@ -10,7 +11,7 @@ def add_user(username, password, email):
     if email_exists(email):
         return jsonify(success=False, reason='Email already exists')
 
-    db.users.insert_one({"username": username, "password": password, "email": email, "color": "#000000", "pathHistory": [], "intersections": [], "currentLocation": [], "lastRevealed": time.time()})
+    db.users.insert_one({"username": username, "password": password, "email": email, "color": "#000000", "pathHistory": [], "intersections": [], "currentLocation": [], "lastRevealed": time.time(), "image": DEFAULT_IMAGE})
 
     return jsonify(success=True, username=username)
 

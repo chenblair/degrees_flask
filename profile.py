@@ -7,7 +7,7 @@ import json
 
 DEFAULT_IMAGE = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaWsjTM9wIYQ-L9K5yj7MvBI222lgSd3fpML3zmdwQ8oPHS1Y4'
 
-def update_profile(username, name=None, password=None, email=None, color=None, pathHistory=None, intersections=None):
+def update_profile(username, name=None, password=None, email=None, color=None, pathHistory=None, intersections=None, image=None):
     user = db.users.find_one({"username": username})
     print(user)
     if user is None:
@@ -25,6 +25,8 @@ def update_profile(username, name=None, password=None, email=None, color=None, p
         db.users.update_one({"username": username}, {"$set": {"pathHistory": pathHistory}})
     if intersections is not None:
         db.users.update_one({"username": username}, {"$set": {"intersections": intersections}})
+    if image is not None:
+        db.users.update_one({"username": username}, {"$set": {"image": image}})
 
     return jsonify(success=True)
 

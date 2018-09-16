@@ -18,11 +18,10 @@ def cakes():
 
 @app.route('/signup', methods=['POST'])
 def sign_up():
-    return auth.add_user(**request.json)
-    # try:
-    #     return auth.add_user(**request.json)
-    # except:
-    #     return jsonify(success=False, reason='Could not sign up due to a Server Error'), 500
+    try:
+        return auth.add_user(**request.json)
+    except:
+        return jsonify(success=False, reason='Could not sign up due to a Server Error'), 500
 
 @app.route('/signin', methods=['GET'])
 def sign_in():
