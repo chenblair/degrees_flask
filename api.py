@@ -12,6 +12,8 @@ import location
 
 @app.route('/')
 def cakes():
+    # location.add_intersection("a", "b", 345, 456)
+
     return 'Yummy cakes!'
 
 @app.route('/signup', methods=['POST'])

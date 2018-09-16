@@ -10,7 +10,7 @@ def add_user(username, password, email):
     if email_exists(email):
         return jsonify(success=False, reason='Email already exists')
 
-    db.users.insert_one({"username": username, "password": password, "email": email, "color": "#000000", "pathHistory": [], "intersections": []})
+    db.users.insert_one({"username": username, "password": password, "email": email, "color": "#000000", "pathHistory": [], "intersections": [], "currentLocation": []})
 
     return jsonify(success=True, username=username)
 
