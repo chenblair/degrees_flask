@@ -59,7 +59,8 @@ def add_new_location():
 @app.route('/get_intersections', methods=['GET'])
 def get_intersections():
     try:
-        return profile.get_intersections(**request.json)
+        username = request.args.get('username')
+        return profile.get_intersections(username)
     except:
         return jsonify(success=False, reason='Could not get intersections due to a Server Error'), 500
 
