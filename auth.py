@@ -15,8 +15,6 @@ def add_user(username, password, email):
     return jsonify(success=True, username=username)
 
 def username_exists(username):
-    print(db.users)
-    print(db.users.find_one({"username": username}))
     return db.users.find_one({"username": username}) is not None
 
 def email_exists(email):
