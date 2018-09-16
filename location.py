@@ -55,7 +55,8 @@ def traverse(username):
             while user2["intersections"][0]["otherUser"] != user["username"]:
                 del user2["intersections"][0]
             moreUsers.append(user2["intersections"])
-        users = users + moreUsers[0]
+        if (len(moreUsers) > 0):
+            users = users + moreUsers[0]
         users = list(filter(lambda x: len(x.get("intersections", [0])) > 1, users))
         level = []
         for user in users:
