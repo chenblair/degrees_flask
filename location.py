@@ -88,3 +88,24 @@ def get_questionable_node_list(username):
             for remaining in user2["intersections"]:
                 nodes.append(remaining["coords"])
     return json.dumps(nodes)
+
+def traverse_fake(username):
+    user = db.users.find_one({"username": username})
+    if user is None:
+        return jsonify(success=False, reason="User does not exist")
+
+    intersections = []
+    pts = [[]]
+
+    users = db.users.find()
+    for thing in users:
+        if len(thing["intersections"]) != 0:
+            intersections.append(thing["intersections"])
+    
+    for stuff in intersections:
+        for blah in stuff:
+            pts[0].append(blah["coords"])
+    
+    return json.dumps(pts)
+    
+

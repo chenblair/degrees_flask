@@ -63,7 +63,7 @@ def get_intersections():
 @app.route('/traverse', methods=['GET'])
 def traverse():
     username = request.args.get('username')
-    return location.traverse(username)
+    return location.traverse_fake(username)
     # try:
     #     username = request.args.get('username')
     #     return location.traverse(username)
