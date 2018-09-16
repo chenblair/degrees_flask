@@ -67,6 +67,11 @@ def traverse():
     username = request.args.get('username')
     return location.traverse(username)
 
+@app.route('/get_question_marks', methods=['GET'])
+def questionable_fcn():
+    username = request.args.get('username')
+    return location.get_questionable_node_list(username)
+
 if __name__ == '__main__':
     # initialize_dbs()
     app.run(debug=True, host='0.0.0.0', port=5555)
