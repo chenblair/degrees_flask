@@ -49,13 +49,14 @@ def traverse(username):
     depth = 0
     tree = []
     while len(users) > 0:
-        users = list(filter(lambda x: len(x["intersections"]) > 1, users))
+        users = list(filter(lambda x: len(x.get("intersections", [0])) > 1, users))
         for user in users:
             user2 = db.users.find_one({"username": user["intersections"][0]["otherUser"]})
             while user2["intersections"][0]["otherUser"] != user["username"]:
                 del user2["intersections"][0]
             moreUsers.append(user2["intersections"])
-        users = users + moreUsers
+        users = users + moreUsers[0]
+        users = list(filter(lambda x: len(x.get("intersections", [0])) > 1, users))
         level = []
         for user in users:
             level.append([user["intersections"][0]["coords"], user["intersections"][1]["coords"], user["color"]])
