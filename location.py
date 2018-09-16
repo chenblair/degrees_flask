@@ -29,7 +29,7 @@ def add_intersection(username, otherUser, lat, lng):
     if user is None or user2 is None:
         return jsonify(success=False, reason="One of the users does not exist")
 
-    db.users.update_one({"username": username}, {"$push": {"intersections": {"otherUser": otherUser, "coords": [lat, lng]}})
-    db.users.update_one({"username": otherUser}, {"$push": {"intersections": {"otherUser": username, "coords": [lat, lng]}})
+    db.users.update_one({"username": username}, {"$push": {"intersections": {"otherUser": otherUser, "coords": [lat, lng]}}})
+    db.users.update_one({"username": otherUser}, {"$push": {"intersections": {"otherUser": username, "coords": [lat, lng]}}})
 
     return jsonify(success=True)
