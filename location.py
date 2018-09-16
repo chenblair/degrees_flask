@@ -102,7 +102,7 @@ def traverse_fake(username):
     for thing in users:
         if len(thing["intersections"]) != 0:
             intersections.append(thing["intersections"])
-            colors.append(user["color"])
+            colors.append(thing["color"])
     
 
     for stuff in intersections:
