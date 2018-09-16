@@ -23,17 +23,22 @@ def add_new_location(username, lat, lng):
 
 # doesn't check if intersection was already added but check_close should handle it
 def add_intersection(username, otherUser, lat, lng):
+    # check if user does not exist
     user = db.users.find_one({"username": username})
     user2 = db.users.find_one({"username": otherUser})
-
     if user is None or user2 is None:
         return jsonify(success=False, reason="One of the users does not exist")
+    
+    # check if intersection has already occurred between these two users
+    prevOccur = db.users.find_one({"$and": [{"username": username}, {"intersections.otherUser": otherUser}]})
+    if prevOccur is not None:
+        return jsonify(success=False, reason="Intersection already exists")
 
+    # add intersection in both users
     db.users.update_one({"username": username}, {"$push": {"intersections": {"otherUser": otherUser, "coords": [lat, lng]}}})
     db.users.update_one({"username": otherUser}, {"$push": {"intersections": {"otherUser": username, "coords": [lat, lng]}}})
 
     return jsonify(success=True)
-
 
 def traverse(username):
     user = db.users.find_one({"username": username})

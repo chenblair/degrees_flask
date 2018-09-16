@@ -59,7 +59,7 @@ def add_new_location():
 def get_intersections():
     try:
         username = request.args.get('username')
-    return profile.get_intersections(username)
+        return profile.get_intersections(username)
     except:
         return jsonify(success=False, reason='Could not get intersections due to a Server Error'), 500
 
