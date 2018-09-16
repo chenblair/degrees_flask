@@ -46,7 +46,7 @@ def traverse(username):
         return jsonify(success=False, reason="User does not exist")
     users = [user]
     moreUsers = []
-    depth = 1
+    depth = 0
     tree = []
     while len(users) > 0:
         users = list(filter(lambda x: len(x.get("intersections", [0])) > 1, users))
@@ -54,8 +54,8 @@ def traverse(username):
             user2 = db.users.find_one({"username": user["intersections"][0]["otherUser"]})
             while user2["intersections"][0]["otherUser"] != user["username"]:
                 del user2["intersections"][0]
-            moreUsers.append(user2)
-        users = users + moreUsers
+            moreUsers.append(user2["intersections"])
+        users = users + moreUsers[0]
         users = list(filter(lambda x: len(x.get("intersections", [0])) > 1, users))
         level = []
         for user in users:
