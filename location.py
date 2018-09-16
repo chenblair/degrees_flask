@@ -46,7 +46,7 @@ def traverse(username):
         return jsonify(success=False, reason="User does not exist")
     users = [user]
     moreUsers = []
-    depth = 0
+    depth = 1
     tree = []
     while len(users) > 0:
         users = list(filter(lambda x: len(x.get("intersections", [0])) > 1, users))
