@@ -72,11 +72,13 @@ def traverse():
 
 @app.route('/get_question_marks', methods=['GET'])
 def questionable_fcn():
-    try:
-        username = request.args.get('username')
-        return location.get_questionable_node_list(username)
-    except:
-        return jsonify(success=False, reason='Could not get question mark locations due to a Server Error'), 500
+    username = request.args.get('username')
+    return location.get_questionable_node_list(username)
+    # try:
+    #     username = request.args.get('username')
+    #     return location.get_questionable_node_list(username)
+    # except:
+    #     return jsonify(success=False, reason='Could not get question mark locations due to a Server Error'), 500
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5555)
