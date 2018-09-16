@@ -51,10 +51,17 @@ def get_profile():
 
 @app.route('/add_new_location', methods=['POST'])
 def add_new_location():
-    # try:
-    return location.add_new_location(**request.json)
-    # except:
-    #     return jsonify(success=False, reason='Could not add location due to a Server Error'), 500
+    try:
+        return location.add_new_location(**request.json)
+    except:
+        return jsonify(success=False, reason='Could not add location due to a Server Error'), 500
+
+@app.route('/get_intersections', methods=['GET'])
+def get_intersections():
+    try:
+        return profile.get_intersections(**request.json)
+    except:
+        return jsonify(success=False, reason='Could not get intersections due to a Server Error'), 500
 
 if __name__ == '__main__':
     # initialize_dbs()

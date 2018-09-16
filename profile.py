@@ -42,3 +42,6 @@ def get_name(user):
     rows = c.execute('''SELECT name FROM profiles WHERE user = ?;''', (user,)).fetchone()
     return rows[0]
 
+def get_intersections(username):
+    user = db.users.find_one({"username": username})
+    return user.intersections if user is not None else jsonify(success=False, reason="User does not exist")
