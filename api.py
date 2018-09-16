@@ -62,11 +62,13 @@ def get_intersections():
 
 @app.route('/traverse', methods=['GET'])
 def traverse():
-    try:
-        username = request.args.get('username')
-        return location.traverse(username)
-    except:
-        return jsonify(success=False, reason='Could not get traversal tree due to a Server Error'), 500
+    username = request.args.get('username')
+    return location.traverse(username)
+    # try:
+    #     username = request.args.get('username')
+    #     return location.traverse(username)
+    # except:
+    #     return jsonify(success=False, reason='Could not get traversal tree due to a Server Error'), 500
 
 @app.route('/get_question_marks', methods=['GET'])
 def questionable_fcn():
