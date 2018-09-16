@@ -1,6 +1,7 @@
 from flask import *
 from api import db
 from bson.json_util import dumps
+import json
 
 # db = 'profiles.db'
 
@@ -33,4 +34,4 @@ def get_profile(username):
 
 def get_intersections(username):
     user = db.users.find_one({"username": username})
-    return user.intersections if user is not None else jsonify(success=False, reason="User does not exist")
+    return json.dumps(user["intersections"]) if user is not None else jsonify(success=False, reason="User does not exist")
