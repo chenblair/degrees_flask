@@ -1,9 +1,8 @@
 from flask import *
 from api import db
 import time
-from profile import DEFAULT_IMAGE
 
-# db = 'users.db'
+DEFAULT_IMAGE = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaWsjTM9wIYQ-L9K5yj7MvBI222lgSd3fpML3zmdwQ8oPHS1Y4'
 
 def add_user(username, password, email):
     if username_exists(username):

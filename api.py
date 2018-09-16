@@ -12,8 +12,6 @@ import location
 
 @app.route('/')
 def cakes():
-    # location.add_intersection("a", "b", 345, 456)
-
     return 'Yummy cakes!'
 
 @app.route('/signup', methods=['POST'])
@@ -64,14 +62,19 @@ def get_intersections():
 
 @app.route('/traverse', methods=['GET'])
 def traverse():
-    username = request.args.get('username')
-    return location.traverse(username)
+    try:
+        username = request.args.get('username')
+        return location.traverse(username)
+    except:
+        return jsonify(success=False, reason='Could not get traversal tree due to a Server Error'), 500
 
 @app.route('/get_question_marks', methods=['GET'])
 def questionable_fcn():
-    username = request.args.get('username')
-    return location.get_questionable_node_list(username)
+    try:
+        username = request.args.get('username')
+        return location.get_questionable_node_list(username)
+    except:
+        return jsonify(success=False, reason='Could not get question mark locations due to a Server Error'), 500
 
 if __name__ == '__main__':
-    # initialize_dbs()
     app.run(debug=True, host='0.0.0.0', port=5555)
