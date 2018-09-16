@@ -81,7 +81,7 @@ def get_questionable_node_list(username):
             user2 = db.users.find_one({"username": intersection["otherUser"]})
             # delete everything up to first intersection with OG user
             while user2["intersections"][0]["otherUser"] != user["username"]:
-                user2["intersections"].drop(0)
+                del user2["intersections"][0]
             # add all other intersections to nodes list
             for remaining in user2["intersections"]:
                 nodes.append(remaining["coords"])
