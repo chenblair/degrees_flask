@@ -64,8 +64,8 @@ def get_intersections():
 
 @app.route('/traverse', methods=['GET'])
 def traverse():
-    location.traverse("user")
-    return jsonify(success=True)
+    username = request.args.get('username')
+    return location.traverse(username)
 
 if __name__ == '__main__':
     # initialize_dbs()

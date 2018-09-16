@@ -44,5 +44,25 @@ def traverse(username):
     user = db.users.find_one({"username": username})
     if user is None:
         return jsonify(success=False, reason="User does not exist")
+    users = [user]
+    moreUsers = []
+    depth = 0
+    tree = []
+    while len(users) > 0:
+        users = filter(lambda x: len(x["intersections"]) > 1, users)
+        for user in users:
+            user2 = db.users.find_one({"username": user["intersections"][0]["otherUser"]})
+            while user2["intersections"][0]["otherUser"] != user["username"]:
+                user2["intersections"].drop(0)
+            moreUsers.append(user2["intersections"])
+        users = users + moreUsers
+        level = []
+        for user in users:
+            level.append([user["intersections"][0]["coords"], user["intersections"][1]["coords"], user["color"]])
+            user["intersections"].drop(0)
+        tree.append(level)
+    return json.dumps(tree)
 
-    print (user)
+
+
+
