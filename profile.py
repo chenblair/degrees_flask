@@ -3,10 +3,6 @@ from api import db
 from bson.json_util import dumps
 import json
 
-# db = 'profiles.db'
-
-DEFAULT_IMAGE = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaWsjTM9wIYQ-L9K5yj7MvBI222lgSd3fpML3zmdwQ8oPHS1Y4'
-
 def update_profile(username, name=None, password=None, email=None, color=None, pathHistory=None, intersections=None, image=None):
     user = db.users.find_one({"username": username})
     print(user)

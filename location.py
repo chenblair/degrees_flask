@@ -63,6 +63,26 @@ def traverse(username):
         tree.append(level)
     return json.dumps(tree)
 
+# get second degree intersections
+def get_questionable_node_list(username):
+    user = db.users.find_one({"username": username})
+    if user is None:
+        return jsonify(success=False, reason="User does not exist")
+    
+    nodes = []
 
-
-
+    # stop at second degree
+    if len(user["intersections"]) > 0:
+        # get intersections of all intersections
+        for intersection in user["intersections"]:
+            # add this point to list
+            nodes.append(intersection["coords"])
+            # get other user
+            user2 = db.users.find_one({"username": intersection["otherUser"]})
+            # delete everything up to first intersection with OG user
+            while user2["intersections"][0]["otherUser"] != user["username"]:
+                user2["intersections"].drop(0)
+            # add all other intersections to nodes list
+            for remaining in user2["intersections"]:
+                nodes.append(remaining["coords"])
+    return json.dumps(nodes)
