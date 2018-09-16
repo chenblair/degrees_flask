@@ -33,7 +33,6 @@ def sign_in():
     except:
         return jsonify(success=False, reason='Could not sign in due to a Server Error'), 500
 
-# NOT WORKING
 @app.route('/update_profile', methods=['POST'])
 def update_profile():
     try:
