@@ -7,4 +7,5 @@ Made with Flask and MongoDB (mlab.com)
 Made for HackMIT 2018.
 
 Repo with frontend: https://github.com/nicholasguo/HackMIT2018
+
 Devpost: https://devpost.com/software/degrees
